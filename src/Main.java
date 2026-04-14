@@ -16,29 +16,24 @@ Scanner scanner = new Scanner(System.in);
 
 while (active){
     System.out.println("**************************");
-    System.out.println("VÄLKOMMEN TILL BIBLIOTEKET");
+    System.out.println("WELCOME TO THE LIBRARY");
     System.out.println("**************************");
-    System.out.println("1. Alternativ för böcker");
-    System.out.println("2. Alternativ för lån");
-    System.out.println("3. Alternativ för medlemskap");
-    System.out.println("4. Avsluta");
+    System.out.println("1. Book options");
+    System.out.println("2. Loan options");
+    System.out.println("3. Membership options");
+    System.out.println("4. Exit");
     System.out.println("**************************");
-    System.out.print("Välj ett alternativ (1-4): ");
+    System.out.print("Choose an option (1-4): ");
     choise = scanner.nextInt();
 
 
     switch (choise) {
         case 1 -> bookController.showBookMenu();
-        case 2 -> System.out.println("Lån");
-        case 3 -> System.out.println("Medlemskap");
+        case 2 -> System.out.println("Loans");
+        case 3 -> System.out.println("Membership");
         case 4 -> active = false;
-        default -> System.out.println("Ogiltigt alternativ");
+        default -> System.out.println("Invalid option");
     }
-
-
-
-
-
 }
 
         scanner.close();
