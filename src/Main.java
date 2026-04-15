@@ -1,6 +1,7 @@
 import book.Book;
 import book.BookController;
 import book.BookRepository;
+import loan.LoanController;
 
 import java.util.Scanner;
 
@@ -9,10 +10,13 @@ public class Main {
     public static void main(String[] args) {
 
         BookController bookController = new BookController();
+        LoanController loanController = new LoanController();
+
+        Scanner scanner = new Scanner(System.in);
 
         boolean active = true;
         int choise;
-Scanner scanner = new Scanner(System.in);
+
 
 while (active){
     System.out.println("**************************");
@@ -29,7 +33,7 @@ while (active){
 
     switch (choise) {
         case 1 -> bookController.showBookMenu();
-        case 2 -> System.out.println("Loans");
+        case 2 -> loanController.showLoanMenu();
         case 3 -> System.out.println("Membership");
         case 4 -> active = false;
         default -> System.out.println("Invalid option");

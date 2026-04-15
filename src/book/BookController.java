@@ -46,7 +46,7 @@ public class BookController {
 
     }
 /* ------ OPTION 1 - View all books ---- */
-    public void showAllBooks(){
+public void showAllBooks(){
         List<Book> books = bookRepository.getAllBooks();
         for (Book book : books) {
             System.out.println(book);
@@ -54,7 +54,7 @@ public class BookController {
     }
 
 /* ----- OPTION 2 - Search books ----- */
-    public void searchBooks() {
+public void searchBooks() {
         boolean active = true;
         int choise;
 
@@ -80,7 +80,6 @@ switch (choise) {
 
 
     }
-
     public void searchByTitle() {
 
         scanner.nextLine();
@@ -96,7 +95,6 @@ switch (choise) {
         }
 
     }
-
     public void searchByYear() {
 
         scanner.nextLine();
@@ -138,8 +136,7 @@ public void adminTools() {
     }
 
 }
-
-public void addBook() {
+    public void addBook() {
 
     System.out.println("ADD A BOOK");
     System.out.println("-------------");
@@ -158,8 +155,7 @@ public void addBook() {
     bookServices.addBook(title, isbn, year);
 
 }
-
-public void deleteBook() {
+    public void deleteBook() {
         System.out.println("DELETE A BOOK");
         System.out.println("-------------");
 
@@ -170,8 +166,6 @@ public void deleteBook() {
         bookServices.deleteBook(id);
 
     }
-
-
     public void updateBook() {
         System.out.println("UPDATE A BOOK");
         System.out.println("-------------");
