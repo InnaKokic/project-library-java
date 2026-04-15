@@ -179,6 +179,74 @@ GROUP BY b.id;
     return books;
 }
 
+
+public void addBook (String title, String isbn, int year) {
+    String sql = """
+INSERT INTO books (title, isbn, year_published) VALUES (?, ?, ?)
+""";
+
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, title);
+        stmt.setString(2, isbn);
+        stmt.setInt(3, year);
+
+       stmt.executeUpdate();
+
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+
+}
+
+public void deleteBook(int id) {
+
+    String sql = """
+            DELETE FROM books WHERE id = ?;
+            """;
+
+    try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+    PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+
+       stmt.executeUpdate();
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+
+}
+
+
+public void updateBook(int id, String newTitle, String newIsbn, int newYear) {
+
+
+    String sql = """
+            UPDATE books SET title = ?, isbn = ?, year_published = ?
+            WHERE id = ?;
+            """;
+
+    try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, newTitle);
+        stmt.setString(2, newIsbn);
+        stmt.setInt(3, newYear);
+        stmt.setInt(4, id);
+
+        stmt.executeUpdate();
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
 }
 
 

@@ -5,6 +5,8 @@ public class Book {
 private String title;
 private int id;
 private int year;
+private String isbn;
+private int totalCopies;
 private int availableCopies;
 private String language;
 private String summary;
@@ -13,7 +15,10 @@ private int pageCount;
 public Book(String title, int id, int year,String isbn, int totalCopies, int availableCopies,
             String language, String summary, int pageCount) {
     this.title = title;
+    this.id = id;
     this.year = year;
+    this.isbn = isbn;
+    this.totalCopies = totalCopies;
     this.availableCopies = availableCopies;
     this.language = language;
     this.summary = summary;
@@ -27,8 +32,8 @@ public Book(String title, int id, int year,String isbn, int totalCopies, int ava
     public String getTitle() {return title;}
     public int getId() {return id;}
     public int getYear() {return year;}
-
-
+    public String getIsbn() { return isbn;}
+    public int getTotalCopies() {return totalCopies;}
 
     @Override
     public String toString() {
