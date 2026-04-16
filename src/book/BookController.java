@@ -1,5 +1,6 @@
 package book;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -58,13 +59,14 @@ public void searchBooks() {
         boolean active = true;
         int choise;
 
-        scanner.nextLine();
+
         System.out.println("SEARCH FOR BOOKS");
         System.out.println("--------------------------");
         System.out.println("1. Search by title");
         System.out.println("2. Search by year");
         System.out.println("3. Back");
         System.out.println("---------------------------");
+        scanner.nextLine();
         System.out.print("Choose an option (1-3): ");
         choise = scanner.nextInt();
 
@@ -116,24 +118,34 @@ public void adminTools() {
     boolean active = true;
     int choise;
 
-    scanner.nextLine();
-    System.out.println("ADMIN TOOLS");
-    System.out.println("--------------------------");
-    System.out.println("1. Add a book");
-    System.out.println("2. Update a existing book");
-    System.out.println("3. Delete a book");
-    System.out.println("4. Back");
-    System.out.println("---------------------------");
-    System.out.print("Choose an option (1-4): ");
-    choise = scanner.nextInt();
+    while (active) {
+
+        System.out.println("ADMIN TOOLS");
+        System.out.println("--------------------------");
+        System.out.println("1. Add a book");
+        System.out.println("2. Update a existing book");
+        System.out.println("3. Delete a book");
+        System.out.println("4. Add a author");
+        System.out.println("5. Categories a book");
+        System.out.println("6. Edit author information");
+        System.out.println("7. Back");
+        System.out.println("---------------------------");
+        scanner.nextLine();
+        System.out.print("Choose an option (1-7): ");
+        choise = scanner.nextInt();
 
 
-    switch (choise) {
-        case 1 -> addBook();
-        case 2 -> updateBook();
-        case 3 -> deleteBook();
-        case 4 -> active = false;
+        switch (choise) {
+            case 1 -> addBook();
+            case 2 -> updateBook();
+            case 3 -> deleteBook();
+            case 4 -> addAuthor();
+            case 5 -> categoriesBook();
+            case 6 -> updateAuthor();
+            case 7 -> active = false;
+        }
     }
+
 
 }
     public void addBook() {
@@ -184,6 +196,77 @@ public void adminTools() {
 
 
         bookServices.updateBook(bookId, newTitle, newIsbn, newYear);
+
+
+    }
+    public void categoriesBook() {
+        System.out.println("CATEGORIES A BOOK ");
+        System.out.println("-------------");
+
+        scanner.nextLine();
+        System.out.print("Enter ID of the book you want to categories: ");
+        int bookId = scanner.nextInt();
+
+        scanner.nextLine();
+        System.out.println("Available categories");
+        System.out.println("1. Fiction");
+        System.out.println("2. Non-Fiction");
+        System.out.println("3. Science Fiction");
+        System.out.println("4. Fantasy");
+        System.out.println("5. Mystery");
+        System.out.println("6. Thriller");
+        System.out.println("7. Romance ");
+        System.out.println("8. Historical Fiction");
+        System.out.println("9. Biography ");
+        System.out.println("10. Self-Help");
+        System.out.println("11. Horror");
+        System.out.println("12. Adventure");
+        System.out.print("Add category (1-12): ");
+        int categoryId = scanner.nextInt();
+
+
+
+        bookServices.categoriesBook(bookId, categoryId);
+
+
+    }
+    public void addAuthor() {
+
+        System.out.println("ADD A AUTHOR");
+        System.out.println("-------------");
+        scanner.nextLine();
+        System.out.print("First name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Last name: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Nationality: ");
+        String nationality = scanner.nextLine();
+        System.out.print("Birth date (YYYY-MM-DD): ");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+
+        bookServices.addAuthor(firstName,lastName,nationality,birthDate);
+
+
+    }
+    public void updateAuthor() {
+
+        System.out.println("EDIT A AUTHOR");
+        System.out.println("-------------");
+        scanner.nextLine();
+        System.out.print("Enter ID of author you want to edit: ");
+        int id = scanner.nextInt();
+
+        System.out.print("First name: ");
+        scanner.nextLine();
+        String firstName = scanner.nextLine();
+        System.out.print("Last name: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Nationality: ");
+        String nationality = scanner.nextLine();
+        System.out.print("Birth date (YYYY-MM-DD): ");
+        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+
+        bookServices.updateAuthor(id, firstName,lastName,nationality,birthDate);
 
 
     }

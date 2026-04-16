@@ -1,5 +1,6 @@
 package book;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.time.Year;
 
@@ -72,4 +73,16 @@ public class BookServices {
         bookRepository.updateBook(id, newTitle, newIsbn, newYear);
     }
 
+    public void addAuthor(String firstName, String lastName, String nationality,
+                          LocalDate birthDate) {
+        bookRepository.addAuthor(firstName,lastName,nationality,birthDate);
+    }
+    public void updateAuthor(int id, String firstName, String lastName, String nationality,
+                          LocalDate birthDate) {
+        bookRepository.updateAuthor(id, firstName,lastName,nationality,birthDate);
+    }
+
+    public void categoriesBook(int id, int categoryId) {
+        bookRepository.categoriesBook(id, categoryId);
+    }
 }

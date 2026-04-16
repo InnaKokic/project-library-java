@@ -1,5 +1,6 @@
 package book;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +68,6 @@ return books;
 
 }
 
-
 public List<Book> searchBookByTitle(String title) {
     List<Book> books = new ArrayList<>();
 
@@ -122,7 +122,6 @@ GROUP BY b.id;
 
     return books;
 }
-
 
 public List<Book> searchBookByYear(int year) {
     List<Book> books = new ArrayList<>();
@@ -179,7 +178,6 @@ GROUP BY b.id;
     return books;
 }
 
-
 public void addBook (String title, String isbn, int year) {
     String sql = """
 INSERT INTO books (title, isbn, year_published) VALUES (?, ?, ?)
@@ -222,7 +220,6 @@ public void deleteBook(int id) {
 
 }
 
-
 public void updateBook(int id, String newTitle, String newIsbn, int newYear) {
 
 
@@ -245,6 +242,76 @@ public void updateBook(int id, String newTitle, String newIsbn, int newYear) {
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
     }
+}
+
+public void categoriesBook(int id, int categoryId) {
+
+    String sql = """
+            INSERT INTO book_categories (book_id, category_id)
+            VALUES (?, ?);
+            """;
+
+    try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        stmt.setInt(2, categoryId);
+
+        stmt.executeUpdate();
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+public void updateAuthor(int id, String firstName, String lastName, String nationality,
+                         LocalDate birthDate) {
+
+    String sql = """
+            UPDATE authors SET first_name = ?, last_name = ?, nationality = ?, birth_date = ?
+            WHERE id = ?;
+            """;
+
+    try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, firstName);
+        stmt.setString(2, lastName);
+        stmt.setString(3, nationality);
+        stmt.setDate(4, Date.valueOf(birthDate));
+        stmt.setInt(5, id);
+
+        stmt.executeUpdate();
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+
+public void addAuthor(String firstName, String lastName, String nationality, LocalDate birthDate) {
+
+String sql = """
+        INSERT INTO authors (first_name, last_name, nationality, birth_date) VALUES (?, ?, ?, ?)
+        """;
+
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, firstName);
+        stmt.setString(2, lastName);
+        stmt.setString(3, nationality);
+        stmt.setDate(4, Date.valueOf(birthDate));
+
+        stmt.executeUpdate();
+
+
+
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+
 }
 
 }
