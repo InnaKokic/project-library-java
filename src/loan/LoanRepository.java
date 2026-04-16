@@ -11,22 +11,29 @@ public class LoanRepository {
     private final String PASSWORD = "";
 
 
-    public List<Loan> getAllMemeberLoans(int memberId) {
+    public List<Loan> getAllMemberLoans(String memberEmail) {
 
 List<Loan> loans = new ArrayList<>();
 
 String sql = """
 
-        SELECT b.title, l.id, l.book_id, l.member_id, l.loan_date, l.due_date
-         FROM loans l
-         JOIN books b ON l.book_id = b.id
-         WHERE l.member_id = ?;
+        SELECT
+            b.title,
+            l.id,
+            l.book_id,
+            l.member_id,
+            l.loan_date,
+            l.due_date
+        FROM loans l
+        JOIN books b ON l.book_id = b.id
+        JOIN members m ON l.member_id = m.id
+        WHERE m.email = ?;
 """;
 
 try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    stmt.setInt(1, memberId);
+    stmt.setString(1, memberEmail);
 
     ResultSet rs = stmt.executeQuery();
 
@@ -50,6 +57,76 @@ PreparedStatement stmt = conn.prepareStatement(sql)) {
 return loans;
     }
 
+    public void createLoan(int memberId, int bookId) {
+
+
+
+        String sql = """
+                INSERT INTO loans (book_id, member_id, loan_date, due_date, return_date)
+                VALUES (?, ?, ?, ?, NULL);
+                """;
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, bookId);
+            stmt.setInt(2, memberId);
+            stmt.setDate(3, Date.valueOf(LocalDate.now()));
+            stmt.setDate(4, Date.valueOf(LocalDate.now().plusWeeks(2)));
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void extendLoan(int memberId, int bookId){
+
+        String sql = """
+                UPDATE loans SET due_date = ?
+                WHERE member_id = ? AND book_id = ?
+                """;
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(LocalDate.now().plusWeeks(2)));
+            stmt.setInt(2, memberId);
+            stmt.setInt(3, bookId);
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+    }
+    public void returnBook(int memberId, int bookId){
+
+        String sql = """
+                UPDATE loans SET return_date = ?
+                WHERE member_id = ? AND book_id = ?
+                """;
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(LocalDate.now()));
+            stmt.setInt(2, memberId);
+            stmt.setInt(3, bookId);
+
+            stmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+    }
 
 
 }

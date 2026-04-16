@@ -31,10 +31,10 @@ public class LoanController {
             choise = scanner.nextInt();
 
             switch (choise) {
-                case 1 -> System.out.println("BORROW");
-                case 2 -> System.out.println("RETURN");
-                case 3 -> System.out.println("EXTEND");
-                case 4 -> showMemberLoans();
+                case 1 -> borrowBook();
+                case 2 -> returnBook();
+                case 3 -> extendLoan();
+                case 4 -> System.out.println(" ");
                 case 5 -> active = false;
                 default -> System.out.println("INVALID OPTION");
             }
@@ -45,19 +45,70 @@ public class LoanController {
     }
 
 
-    public void showMemberLoans() {
+//    public void showMemberLoans() {
+//
+//        System.out.println("---------------------");
+//        System.out.println("SHOW LOANS");
+//        System.out.println("---------------------");
+//        System.out.print("Enter your member ID: ");
+//        int memberId = scanner.nextInt();
+//
+//        List<Loan> loans = loanServices.showMemberLoans(memberEmail);
+//        for (Loan loan : loans) {System.out.println(loan);}
+//
+//
+//    }
+
+    public void borrowBook() {
 
         System.out.println("---------------------");
-        System.out.println("SHOW LOANS");
+        System.out.println("BORROW BOOK");
         System.out.println("---------------------");
-        System.out.println("Enter your member ID: ");
+
+        System.out.print("Enter your member ID: ");
         int memberId = scanner.nextInt();
+        System.out.print("Enter book ID: ");
+        int bookId = scanner.nextInt();
 
-        List<Loan> loans = loanServices.showMemberLoans(memberId);
-        for (Loan loan : loans) {System.out.println(loan);}
+        loanServices.createLoan(memberId, bookId);
+
 
 
     }
+    public void extendLoan() {
+
+        System.out.println("---------------------");
+        System.out.println("EXTEND LOAN");
+        System.out.println("---------------------");
+
+        System.out.print("Enter your member ID: ");
+        int memberId = scanner.nextInt();
+        System.out.print("Enter book ID: ");
+        int bookId = scanner.nextInt();
+
+        loanServices.extendLoan(memberId, bookId);
+
+
+
+    }
+    public void returnBook() {
+
+        System.out.println("---------------------");
+        System.out.println("RETURN BOOK");
+        System.out.println("---------------------");
+
+        System.out.print("Enter your member ID: ");
+        int memberId = scanner.nextInt();
+        System.out.print("Enter book ID: ");
+        int bookId = scanner.nextInt();
+
+        loanServices.returnBook(memberId, bookId);
+
+
+
+    }
+
+
 
 
 }

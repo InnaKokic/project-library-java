@@ -32,9 +32,7 @@ public class Loan {
         return bookId;
     }
 
-    public String getBookTitle() {
-        return bookTitle;
-    }
+    public String getBookTitle() { return bookTitle;}
 
     public void setBookId(int bookId) {
         this.bookId = bookId;

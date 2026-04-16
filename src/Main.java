@@ -2,6 +2,7 @@ import book.Book;
 import book.BookController;
 import book.BookRepository;
 import loan.LoanController;
+import member.MemberController;
 
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class Main {
 
         BookController bookController = new BookController();
         LoanController loanController = new LoanController();
+        MemberController memberController = new MemberController();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -34,7 +36,7 @@ while (active){
     switch (choise) {
         case 1 -> bookController.showBookMenu();
         case 2 -> loanController.showLoanMenu();
-        case 3 -> System.out.println("Membership");
+        case 3 -> memberController.showMemberMenu();
         case 4 -> active = false;
         default -> System.out.println("Invalid option");
     }
