@@ -66,11 +66,11 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Your member ID: " + id +
+        return "Member ID: " + id +
                 " | " + "Name: " + firstName + " " + lastName +
                 " | " + "Email: " + email +
-                " | " + "You joined: " + membershipDate +
+                " | " + "Joined: " + membershipDate +
                 " | " + "Type of membership: " + membershipType +
-                " | " + "Your membership is " + status;
+                " | " + "This membership is " + status;
     }
 }

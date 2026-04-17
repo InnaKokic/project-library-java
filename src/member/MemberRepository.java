@@ -3,6 +3,7 @@ package member;
 import loan.Loan;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,4 +107,59 @@ return members;
 
     }
 
+    public void addMember(String firstName, String lastName, String email, String memberType ) {
+
+        String sql = """
+                INSERT INTO members (
+                    first_name,
+                    last_name,
+                    email,
+                    membership_date,
+                    membership_type,
+                    status
+                )
+                VALUES (?, ?, ?, ?, ?, ?);
+                """;
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, email);
+            stmt.setDate(4, Date.valueOf(LocalDate.now()));
+            stmt.setString(5, memberType);
+            stmt.setString(6, "active");
+
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void suspendMember(String memberEmail) {
+
+        String sql = """
+                UPDATE members SET status = "suspended"
+                WHERE email = ?
+                """;
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, memberEmail);
+
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
 }

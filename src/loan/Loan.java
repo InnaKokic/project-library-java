@@ -75,7 +75,9 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Title: " + bookTitle + " | " + "Loan date: " + loanDate +
+        return " | " +  "Member ID: " + memberId +
+                " | " + "Title: " + bookTitle +
+                " | " + "Loan date: " + loanDate +
                 " | " + "Due date: " + dueDate;
     }
 

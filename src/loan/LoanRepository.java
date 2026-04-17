@@ -23,11 +23,12 @@ String sql = """
             l.book_id,
             l.member_id,
             l.loan_date,
-            l.due_date
+            l.due_date,
+            l.return_date
         FROM loans l
         JOIN books b ON l.book_id = b.id
         JOIN members m ON l.member_id = m.id
-        WHERE m.email = ?;
+        WHERE m.email = ? AND return_date IS NULL
 """;
 
 try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -55,6 +56,47 @@ PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 
 return loans;
+    }
+
+    public List<Loan> getAllActiveLoans() {
+        List<Loan> loans = new ArrayList<>();
+        String sql = """
+                SELECT
+                            b.title,
+                            l.id,
+                            l.book_id,
+                            l.member_id,
+                            l.loan_date,
+                            l.due_date,
+                            l.return_date
+                        FROM loans l
+                        JOIN books b ON l.book_id = b.id
+                        JOIN members m ON l.member_id = m.id
+                        WHERE return_date is null
+                """;
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+           Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                loans.add(new Loan(
+                        rs.getInt("id"),
+                        rs.getInt("book_id"),
+                        rs.getInt("member_id"),
+                        rs.getString("title"),
+                        rs.getDate("loan_date").toLocalDate(),
+                        rs.getDate("due_date").toLocalDate(),
+                        null
+                ));
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return loans;
     }
 
     public void createLoan(int memberId, int bookId) {

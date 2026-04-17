@@ -24,18 +24,18 @@ public class LoanController {
             System.out.println("1. Borrow book");
             System.out.println("2. Return book");
             System.out.println("3. Extend loan");
-            System.out.println("4. Show my active loans");
-            System.out.println("5. Back");
+            System.out.println("4.[ADMIN] Show all active loans");
+            System.out.println("0. Back");
             System.out.println("---------------------------");
-            System.out.print("Choose an option (1-5): ");
+            System.out.print("Choose an option (1-4): ");
             choise = scanner.nextInt();
 
             switch (choise) {
                 case 1 -> borrowBook();
                 case 2 -> returnBook();
                 case 3 -> extendLoan();
-                case 4 -> System.out.println(" ");
-                case 5 -> active = false;
+                case 4 -> showAllLoans();
+                case 0 -> active = false;
                 default -> System.out.println("INVALID OPTION");
             }
 
@@ -45,19 +45,19 @@ public class LoanController {
     }
 
 
-//    public void showMemberLoans() {
-//
-//        System.out.println("---------------------");
-//        System.out.println("SHOW LOANS");
-//        System.out.println("---------------------");
-//        System.out.print("Enter your member ID: ");
-//        int memberId = scanner.nextInt();
-//
-//        List<Loan> loans = loanServices.showMemberLoans(memberEmail);
-//        for (Loan loan : loans) {System.out.println(loan);}
-//
-//
-//    }
+    public void showAllLoans() {
+
+        System.out.println("---------------------");
+        System.out.println("ALL ACTIVE LOANS");
+        System.out.println("---------------------");
+
+        List<Loan> loans = loanServices.showAllLoans();
+        for (Loan loan : loans)
+            System.out.println(loan);
+
+
+
+    }
 
     public void borrowBook() {
 

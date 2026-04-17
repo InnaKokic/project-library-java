@@ -13,6 +13,11 @@ public class LoanServices {
         return loanRepository.getAllMemberLoans(memberEmail);
     }
 
+    public List<Loan> showAllLoans() {
+
+      return loanRepository.getAllActiveLoans();
+    }
+
     public void createLoan(int memberID, int bookId){
 
         //Vad händer om bookId inte finns?
