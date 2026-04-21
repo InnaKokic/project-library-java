@@ -28,6 +28,11 @@ public class LoanServices {
         return loanRepository.getOverdueLoans();
     }
 
+    public List<PopularBookDTO> showPopularBooks() {
+
+        return loanRepository.getPopularBooks();
+    }
+
     public void createLoan(int memberID, int bookId){
 
 

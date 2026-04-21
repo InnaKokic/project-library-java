@@ -8,6 +8,26 @@ public class BookServices {
 
     BookRepository bookRepository = new BookRepository();
 
+    public List<BookDTO> getAllBooksDTO() {
+        return bookRepository.getAllBooks().stream()
+                .map(book -> new BookDTO(
+                        book.getId(),
+                        book.getTitle(),
+                        book.getAuthors(),
+                        book.getIsbn(),
+                        book.getYear(),
+                        book.getAvailableCopies(),
+                        book.getLanguage(),
+                        book.getSummary()
+                ))
+                .toList();
+    }
+
+    public List<Book> showAllBooks() {
+
+        return bookRepository.getAllBooks();
+    }
+
     public List<Book> searchTitle(String title) {
 
         if (title == null) {

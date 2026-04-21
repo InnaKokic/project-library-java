@@ -4,6 +4,7 @@ public class Book {
 
 private String title;
 private int id;
+private String authors;
 private int year;
 private String isbn;
 private int totalCopies;
@@ -12,10 +13,12 @@ private String language;
 private String summary;
 private int pageCount;
 
-public Book(String title, int id, int year,String isbn, int totalCopies, int availableCopies,
+public Book(String title, int id, String authors, int year,String isbn, int totalCopies,
+            int availableCopies,
             String language, String summary, int pageCount) {
     this.title = title;
     this.id = id;
+    this.authors = authors;
     this.year = year;
     this.isbn = isbn;
     this.totalCopies = totalCopies;
@@ -33,13 +36,18 @@ public Book(String title, int id, int year,String isbn, int totalCopies, int ava
     public int getId() {return id;}
     public int getYear() {return year;}
     public String getIsbn() { return isbn;}
+    public String getAuthors() { return authors; }
     public int getTotalCopies() {return totalCopies;}
 
     @Override
     public String toString() {
-        return title + " | " + "Year: " + year + " | " + "Language: " + language +
-                " | " + "Pages: " + pageCount + " | " + "Summary: " + summary + " | " +
-                "Copies in stock: " + "[" + availableCopies + "]";
+        return
+                        title +
+                        " | " + "Year: " + year +
+                        " | " + "Language: " + language +
+                        " | " + "Pages: " + pageCount +
+                        " | " + "Summary: " + summary +
+                        " | " + "Copies in stock: " + "[" + availableCopies + "]";
     }
 
 }

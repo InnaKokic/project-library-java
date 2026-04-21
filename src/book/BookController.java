@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BookController {
-
-    BookRepository bookRepository = new BookRepository();
+    
     BookServices bookServices = new BookServices();
 
 
@@ -48,9 +47,15 @@ public class BookController {
     }
 /* ------ OPTION 1 - View all books ---- */
 public void showAllBooks(){
-        List<Book> books = bookRepository.getAllBooks();
-        for (Book book : books) {
-            System.out.println(book);
+        List<BookDTO> books = bookServices.getAllBooksDTO();
+        for (BookDTO dto : books) {
+            //Med record anropar man metoder som .title() ist för .getTitle()
+            System.out.println(
+                    " | " + "Title: " + dto.title() +
+                    " | " +  "Written by: " + dto.authors() + " | " +
+                    "[" + dto.availableCopies() + " " +
+                    "copies available" +
+                    "]" + " | ");
         }
     }
 

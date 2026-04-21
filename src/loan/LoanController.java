@@ -57,6 +57,7 @@ public void showAdminMenu() {
         System.out.println("1. Show all active loans");
         System.out.println("2. Show overdue loans");
         System.out.println("3. Return a book manually");
+        System.out.println("4. See list of 5 most borrowed books");
         System.out.println("0. Back");
         scanner.nextLine();
         System.out.print("Choose an option (1-2): ");
@@ -67,6 +68,7 @@ public void showAdminMenu() {
             case 1 -> showAllLoans();
             case 2 -> showOverdueLoans();
             case 3 -> returnBook();
+            case 4 -> showPopularBooks();
             case 0 -> active = false;
           default -> System.out.println("INVALID OPTION");
         }
@@ -98,6 +100,19 @@ public void showAdminMenu() {
 
 
     }
+
+    public void showPopularBooks() {
+        System.out.println("---------------------");
+        System.out.println("5 MOST BORROWED BOOKS");
+        System.out.println("---------------------");
+
+        List<PopularBookDTO> popularBooks = loanServices.showPopularBooks();
+        for (PopularBookDTO book : popularBooks) {
+            System.out.println(book.title() + " - Number of loans: " + book.loanCount());
+        }
+
+    }
+
 
     public void borrowBook() {
 

@@ -48,6 +48,7 @@ ORDER BY b.title;
         int id = rs.getInt("id");
         String title = rs.getString("title");
         String isbn = rs.getString("isbn");
+        String authors = rs.getString("authors");
         int year = rs.getInt("year_published");
         int totalCopies = rs.getInt("total_copies");
         int availableCopies = rs.getInt("available_copies");
@@ -55,7 +56,8 @@ ORDER BY b.title;
         String summary = rs.getString("summary");
         int pageCount = rs.getInt("page_count");
 
-        Book book = new Book(title, id, year, isbn, totalCopies, availableCopies, language, summary, pageCount);
+        Book book = new Book(title, id, authors, year, isbn, totalCopies, availableCopies, language,
+                summary, pageCount);
         books.add(book);
     }
 
@@ -107,6 +109,7 @@ GROUP BY b.id;
             books.add(new Book(
                     rs.getString("title"),
                     rs.getInt("id"),
+                    rs.getString("authors"),
                     rs.getInt("year_published"),
                     rs.getString("isbn"),
                     rs.getInt("total_copies"),
@@ -162,6 +165,7 @@ GROUP BY b.id;
             books.add(new Book(
                     rs.getString("title"),
                     rs.getInt("id"),
+                    rs.getString("authors"),
                     rs.getInt("year_published"),
                     rs.getString("isbn"),
                     rs.getInt("total_copies"),

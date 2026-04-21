@@ -136,6 +136,40 @@ return loans;
         return loans;
     }
 
+    public List<PopularBookDTO> getPopularBooks() {
+
+        List<PopularBookDTO> popularBooks = new ArrayList<>();
+
+        String sql = """
+                SELECT
+                    b.title,
+                    COUNT(l.id) AS total_loans
+                FROM loans l
+                JOIN books b ON l.book_id = b.id
+                GROUP BY b.id, b.title
+                ORDER BY total_loans DESC
+                LIMIT 5
+                """;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                popularBooks.add(new PopularBookDTO(
+                        rs.getString("title"),
+                        rs.getInt("total_loans")
+                ));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+        return popularBooks;
+    }
+
     public void createLoan(int memberId, int bookId) {
 
 
@@ -161,7 +195,6 @@ return loans;
         }
 
     }
-
     public void extendLoan(int memberId, int bookId){
 
         String sql = """
