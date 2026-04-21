@@ -1,5 +1,6 @@
 package member;
 
+import fine.Fine;
 import loan.Loan;
 import loan.LoanServices;
 
@@ -8,7 +9,7 @@ import java.util.Scanner;
 
 public class MemberController {
 
-    MemberRepository memberRepository = new MemberRepository();
+
     MemberServices memberServices = new MemberServices();
     LoanServices loanServices = new LoanServices();
 
@@ -55,14 +56,23 @@ public class MemberController {
         System.out.print("Enter your email: ");
         String memberEmail = scanner.nextLine();
 
-
+try {
         System.out.println("-------------------");
         System.out.println("YOUR PROFILE");
         System.out.println("-------------------");
+
         List<Member> members = memberServices.showMemberProfile(memberEmail);
         for (Member member : members) {
             System.out.println(member);
         }
+
+} catch (MemberSuspendedException e) {
+    System.out.println(e.getMessage());
+
+    return;
+
+};
+
 
         while (active) {
 
@@ -71,7 +81,8 @@ public class MemberController {
         System.out.println("-------------------");
         System.out.println("1. See my loans");
         System.out.println("2. Edit profile");
-        System.out.println("3. Back");
+        System.out.println("3. See my fines");
+        System.out.println("0. Back");
         System.out.println("---------------------------");
         System.out.print("Choose an option (1-3): ");
         choise = scanner.nextInt();
@@ -79,7 +90,8 @@ public class MemberController {
         switch (choise) {
             case 1 -> showMemberLoans(memberEmail);
             case 2 -> editProfileMenu(memberEmail);
-            case 3 -> active = false;
+            case 3 -> seeFines(memberEmail);
+            case 0 -> active = false;
             default -> System.out.println("INVALID OPTION");
         }
         }
@@ -99,7 +111,6 @@ public class MemberController {
 
 
     }
-
 
     public void editProfileMenu(String memberEmail) {
 
@@ -122,7 +133,7 @@ public class MemberController {
         System.out.println("-------------------");
         System.out.println("1. Change email");
         System.out.println("2. Change name");
-        System.out.println("3. Change membership type");
+        System.out.println("3. Change membership status");
         System.out.println("4. Delete profile");
         System.out.println("5. Back");
         System.out.println("---------------------------");
@@ -132,7 +143,7 @@ public class MemberController {
         switch (choise) {
             case 1 -> editEmail(memberEmail);
             case 2 -> editName(memberEmail);
-            case 3 -> System.out.println("opt 3");
+            case 3 -> editMemberType(memberEmail);
             case 4 -> System.out.println("opt 4");
             case 5 -> active = false;
             default -> System.out.println("INVALID OPTION");
@@ -155,6 +166,7 @@ public class MemberController {
 
 
     }
+
     public void editName(String memberEmail) {
         System.out.println("-------------------");
         System.out.println("CHANGE NAME");
@@ -170,7 +182,45 @@ public class MemberController {
 
 
     }
+    public void editMemberType(String memberEmail) {
 
+        String memberStatus = "";
+
+        System.out.println("-------------------");
+        System.out.println("CHANGE MEMBERSHIP STATUS");
+        System.out.println("-------------------");
+        scanner.nextLine();
+        System.out.println("1. [ACTIVATE ACCOUNT]");
+        System.out.println("2. [DEACTIVATE ACCOUNT]");
+        System.out.print("Choose membership type (1-2): ");
+        int choise = scanner.nextInt();
+
+        switch (choise) {
+            case 1 -> memberStatus = "active";
+            case 2 -> memberStatus = "expired";
+            default -> System.out.println("INVALID OPTION");
+        }
+
+        memberServices.editMemberSt(memberEmail, memberStatus);
+
+
+
+    }
+
+    public void seeFines(String memberEmail) {
+        System.out.println("-------------------");
+        System.out.println("YOUR FINES");
+        System.out.println("-------------------");
+
+List<Fine> fines = memberServices.showMemberFine(memberEmail);
+for (Fine fine : fines) {
+    System.out.println(fine);
+}
+
+
+    }
+
+    /*---- ADMIN TOOLS ------*/
     public void showAdminMenu() {
         boolean active = true;
         int choise;
@@ -197,7 +247,7 @@ public class MemberController {
 
     }
 
-    public void addMember() {
+        public void addMember() {
         System.out.println("--------------------------");
         System.out.println("ADD NEW MEMBER");
         System.out.println("--------------------------");
@@ -219,7 +269,7 @@ public class MemberController {
 
     }
 
-    public void suspendMember() {
+        public void suspendMember() {
 
         int choice;
 

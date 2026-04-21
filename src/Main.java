@@ -27,9 +27,9 @@ while (active){
     System.out.println("1. Book options");
     System.out.println("2. Loan options");
     System.out.println("3. Membership options");
-    System.out.println("4. Exit");
+    System.out.println("0. Exit");
     System.out.println("**************************");
-    System.out.print("Choose an option (1-4): ");
+    System.out.print("Choose an option (1-3): ");
     choise = scanner.nextInt();
 
 
@@ -37,7 +37,7 @@ while (active){
         case 1 -> bookController.showBookMenu();
         case 2 -> loanController.showLoanMenu();
         case 3 -> memberController.showMemberMenu();
-        case 4 -> active = false;
+        case 0 -> active = false;
         default -> System.out.println("Invalid option");
     }
 }

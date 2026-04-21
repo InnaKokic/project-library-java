@@ -59,25 +59,25 @@ public void searchBooks() {
         boolean active = true;
         int choise;
 
-
+while (active) {
         System.out.println("SEARCH FOR BOOKS");
         System.out.println("--------------------------");
         System.out.println("1. Search by title");
         System.out.println("2. Search by year");
-        System.out.println("3. Back");
+        System.out.println("0. Back");
         System.out.println("---------------------------");
         scanner.nextLine();
-        System.out.print("Choose an option (1-3): ");
+        System.out.print("Choose an option (1-2): ");
         choise = scanner.nextInt();
 
 
 switch (choise) {
     case 1 -> searchByTitle();
     case 2 -> searchByYear();
-    case 3 -> active = false;
+    case 0 -> active = false;
     default -> System.out.println("INVALID OPTION");
-}
-
+        }
+    }
 
 
 
@@ -128,7 +128,7 @@ public void adminTools() {
         System.out.println("4. Add a author");
         System.out.println("5. Categories a book");
         System.out.println("6. Edit author information");
-        System.out.println("7. Back");
+        System.out.println("0. Back");
         System.out.println("---------------------------");
         scanner.nextLine();
         System.out.print("Choose an option (1-7): ");
@@ -142,7 +142,8 @@ public void adminTools() {
             case 4 -> addAuthor();
             case 5 -> categoriesBook();
             case 6 -> updateAuthor();
-            case 7 -> active = false;
+            case 0 -> active = false;
+            default -> System.out.println("INVALID OPTION");
         }
     }
 

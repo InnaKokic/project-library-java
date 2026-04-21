@@ -1,7 +1,5 @@
 package member;
 
-import loan.Loan;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +11,44 @@ public class MemberRepository {
     private final String USER = "root";
     private final String PASSWORD = "";
 
+    public Member getMemberById(int memberId) {
+        String sql = """
+            SELECT
+                m.id,
+                m.first_name,
+                m.last_name,
+                m.email,
+                m.membership_date,
+                m.membership_type,
+                m.status
+            FROM members m
+            WHERE m.id = ?;
+            """;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, memberId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Member(
+                        rs.getInt("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("email"),
+                        rs.getDate("membership_date").toLocalDate(),
+                        rs.getString("membership_type"),
+                        rs.getString("status")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return null;
+    }
     public List<Member> showMemberProfile(String memberEmail) {
 
         List<Member> members = new ArrayList<>();
@@ -58,7 +94,6 @@ public class MemberRepository {
 
 return members;
     }
-
     public void editProfileEmail(String newEmail, String memberEmail) {
 
         String sql = """
@@ -106,7 +141,30 @@ return members;
 
 
     }
+    public void editMemberStatus(String memberEmail, String memberStatus) {
 
+        String sql = """
+                UPDATE members SET status = ? WHERE email = ?
+                """;
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, memberStatus);
+            stmt.setString(2, memberEmail);
+
+
+
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+
+
+    }
     public void addMember(String firstName, String lastName, String email, String memberType ) {
 
         String sql = """
@@ -140,7 +198,6 @@ return members;
         }
 
     }
-
     public void suspendMember(String memberEmail) {
 
         String sql = """
@@ -162,4 +219,5 @@ return members;
         }
 
     }
+
 }

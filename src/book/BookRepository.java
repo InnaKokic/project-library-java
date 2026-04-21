@@ -39,7 +39,8 @@ LEFT JOIN authors a ON ba.author_id = a.id
 LEFT JOIN book_categories bc ON b.id = bc.book_id
 LEFT JOIN categories c ON bc.category_id = c.id
 
-GROUP BY b.id;
+GROUP BY b.id
+ORDER BY b.title;
 
 """);
 
