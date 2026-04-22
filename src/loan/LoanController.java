@@ -1,6 +1,6 @@
 package loan;
 
-import member.MemberSuspendedException;
+import exception.LibraryException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -59,8 +59,7 @@ public void showAdminMenu() {
         System.out.println("3. Return a book manually");
         System.out.println("4. See list of 5 most borrowed books");
         System.out.println("0. Back");
-        scanner.nextLine();
-        System.out.print("Choose an option (1-2): ");
+        System.out.print("Choose an option (1-4): ");
         choise = scanner.nextInt();
 
 
@@ -125,14 +124,13 @@ public void showAdminMenu() {
         System.out.print("Enter book ID: ");
         int bookId = scanner.nextInt();
 
+
+
         try {
             loanServices.createLoan(memberId, bookId);
-        } catch (MemberSuspendedException e) {
+        } catch (LibraryException e) {
             System.out.println(e.getMessage());
         }
-
-
-
 
 
     }
@@ -149,7 +147,7 @@ public void showAdminMenu() {
 
         try{
             loanServices.extendLoan(memberId, bookId);
-        } catch (MemberSuspendedException e) {
+        } catch (LibraryException e) {
             System.out.println(e.getMessage());
         }
 

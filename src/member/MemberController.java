@@ -1,8 +1,10 @@
 package member;
 
+import exception.LibraryException;
 import fine.Fine;
 import loan.Loan;
 import loan.LoanServices;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -66,7 +68,7 @@ try {
             System.out.println(member);
         }
 
-} catch (MemberSuspendedException e) {
+} catch (LibraryException e) {
     System.out.println(e.getMessage());
 
     return;
@@ -117,15 +119,6 @@ try {
     boolean active = true;
     int choise;
 
-    System.out.println("-------------------");
-    System.out.println("YOUR PROFILE");
-    System.out.println("-------------------");
-
-    List<Member> members = memberServices.showMemberProfile(memberEmail);
-    for (Member member : members) {
-        System.out.println(member);
-    }
-
     while (active) {
 
         System.out.println("-------------------");
@@ -134,18 +127,16 @@ try {
         System.out.println("1. Change email");
         System.out.println("2. Change name");
         System.out.println("3. Change membership status");
-        System.out.println("4. Delete profile");
-        System.out.println("5. Back");
+        System.out.println("0. Back");
         System.out.println("---------------------------");
-        System.out.print("Choose an option (1-5): ");
+        System.out.print("Choose an option (1-3): ");
         choise = scanner.nextInt();
 
         switch (choise) {
             case 1 -> editEmail(memberEmail);
             case 2 -> editName(memberEmail);
             case 3 -> editMemberType(memberEmail);
-            case 4 -> System.out.println("opt 4");
-            case 5 -> active = false;
+            case 0 -> active = false;
             default -> System.out.println("INVALID OPTION");
         }
     }

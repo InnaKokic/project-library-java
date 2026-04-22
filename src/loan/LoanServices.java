@@ -1,6 +1,7 @@
 package loan;
 
 import member.Member;
+import member.MemberNotFoundException;
 import member.MemberRepository;
 import member.MemberSuspendedException;
 
@@ -38,7 +39,11 @@ public class LoanServices {
 
         Member member = memberRepository.getMemberById(memberID);
 
-        if (member != null && member.getStatus().equalsIgnoreCase("suspended")) {
+        if (member == null) {
+            throw new MemberNotFoundException("ID: " + memberID);
+        }
+
+        if (member.getStatus().equalsIgnoreCase("suspended")) {
             throw new MemberSuspendedException(member.getId());
         }
         //Vad händer om bookId inte finns?
@@ -53,7 +58,10 @@ loanRepository.createLoan(memberID, bookId);
     public void extendLoan(int memberID, int bookId){
         Member member = memberRepository.getMemberById(memberID);
 
-        if (member != null && member.getStatus().equalsIgnoreCase("suspended")) {
+        if (member == null) {
+            throw new MemberNotFoundException("ID: " + memberID);
+        }
+        if (member.getStatus().equalsIgnoreCase("suspended")) {
             throw new MemberSuspendedException(member.getId());
         }
 

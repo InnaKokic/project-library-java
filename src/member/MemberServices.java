@@ -12,16 +12,24 @@ public class MemberServices {
     FineRepository fineRepository = new FineRepository();
 
 
-    public List<Member> showMemberProfile(String memberEmail){
+    public List<Member> showMemberProfile(String memberEmail) {
+
+        if (memberEmail.isEmpty()) {
+            throw new MemberNotFoundException(memberEmail);
+        }
 
         List<Member> members = memberRepository.showMemberProfile(memberEmail);
 
+        if (members.isEmpty()) {          // <-- kolla listan, inte emailsträngen
+            throw new MemberNotFoundException(memberEmail);
+        }
+
         Member member = members.get(0);
         if (member.getStatus().equalsIgnoreCase("suspended")) {
-            throw  new MemberSuspendedException(member.getId());
+            throw new MemberSuspendedException(member.getId());
         }
-        return members;
 
+        return members;
     }
 
     public void editProfileEmail(String memberEmail, String newEmail ) {
@@ -41,9 +49,11 @@ public class MemberServices {
 
     public void addMember(String firstName, String lastName, String email, String memberType) {
 
-        //validering:
-        // Får bara välja member type standard eller premium
-
+        //.equalsIgnoreCase = gör att input inte är känslig för små eller stora bokstäver
+        if (!memberType.equalsIgnoreCase("standard") && !memberType.equalsIgnoreCase("premium")) {
+            System.out.println("Invalid membership type. Choose STANDARD or PREMIUM.");
+            return;
+        }
         memberRepository.addMember(firstName, lastName, email, memberType);
 
     }

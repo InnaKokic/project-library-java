@@ -31,7 +31,7 @@ public class FineRepository {
                 JOIN members m ON l.member_id = m.id
                 JOIN books b ON l.book_id = b.id
                 WHERE m.email = ?
-                AND f.status = 'pending';;
+                AND f.status = 'pending';
                 """;
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
