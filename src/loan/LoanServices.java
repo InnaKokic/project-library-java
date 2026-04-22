@@ -1,5 +1,8 @@
 package loan;
 
+import book.Book;
+import book.BookAvailabilityDTO;
+import book.BookRepository;
 import member.Member;
 import member.MemberNotFoundException;
 import member.MemberRepository;
@@ -9,6 +12,7 @@ import java.util.List;
 
 public class LoanServices {
 
+    BookRepository bookRepository = new BookRepository();
     MemberRepository memberRepository = new MemberRepository();
     LoanRepository loanRepository = new LoanRepository();
 
@@ -36,7 +40,7 @@ public class LoanServices {
 
     public void createLoan(int memberID, int bookId){
 
-
+        BookAvailabilityDTO book = bookRepository.getBookById(bookId);
         Member member = memberRepository.getMemberById(memberID);
 
         if (member == null) {
@@ -46,9 +50,17 @@ public class LoanServices {
         if (member.getStatus().equalsIgnoreCase("suspended")) {
             throw new MemberSuspendedException(member.getId());
         }
-        //Vad händer om bookId inte finns?
-        //Vad händer om memberId inte finns?
-        //Vad händer om available_copies = 0?
+
+
+        if (book == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+        if (book.availableCopies() == 0) {
+            System.out.println("No available copies of this book.");
+            return;
+        }
+
 
 
 loanRepository.createLoan(memberID, bookId);

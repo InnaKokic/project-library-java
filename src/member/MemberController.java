@@ -275,10 +275,18 @@ for (Fine fine : fines) {
         System.out.println("MEMBER PROFILE");
         System.out.println("--------------------------");
 
-        List<Member> members = memberServices.showMemberProfile(memberEmail);
-        for (Member member : members) {
-            System.out.println(member);
+        try{
+            List<Member> members = memberServices.showMemberProfile(memberEmail);
+            for (Member member : members) {
+                System.out.println(member);
+            }
+        } catch (LibraryException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+
+
+
         System.out.println("--------------------------");
         System.out.println("1. Suspend member");
         System.out.println("2. Cancel");

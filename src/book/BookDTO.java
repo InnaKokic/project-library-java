@@ -11,7 +11,7 @@ public record BookDTO(
         String summary
 ) {
     // En record i Java är ett sätt att definiera en enkel klass som främst
-    // används för att hålla data – utan att du behöver skriva
+    // används för att hålla data – utan att man behöver skriva
     // all “boilerplate”-kod själv.
     //Här slipper man skriva egna konstruktor, getters,
     // toString(), equals() och hashCode().

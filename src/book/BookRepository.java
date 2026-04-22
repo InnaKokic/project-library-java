@@ -12,6 +12,29 @@ public class BookRepository {
 
 
 
+    public BookAvailabilityDTO getBookById(int bookId) {
+        String sql = "SELECT id, title, available_copies FROM books WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, bookId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new BookAvailabilityDTO(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getInt("available_copies")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
+
 public List<Book> getAllBooks() {
 
     List<Book> books = new ArrayList<>();

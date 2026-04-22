@@ -79,7 +79,20 @@ public class BookServices {
 
     public void addBook(String title, String isbn, int year) {
 
+        //Om titel är tom, även efter trimmning av mellanslag, kommer man ej vidare
+        if (title == null || title.trim().isEmpty()) {
+            System.out.println("Title cannot be empty.");
+            return;
+        }
 
+
+        // currentYear hämtar nuvarande år.
+        int currentYear = Year.now().getValue();
+        //Kollar om input år är tidigare än år 0, eller i framtiden.
+        if (year < 0 || year > currentYear) {
+            System.out.println("Year must be between 0 and " + currentYear);
+            return;
+        }
         bookRepository.addBook(title, isbn, year);
     }
 
