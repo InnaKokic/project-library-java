@@ -15,7 +15,7 @@ public class LoanController {
     public void showLoanMenu() {
 
         boolean active = true;
-        int choise;
+        int choice;
 
         while (active) {
 
@@ -29,9 +29,9 @@ public class LoanController {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-4): ");
-            choise = scanner.nextInt();
+            choice = scanner.nextInt();
 
-            switch (choise) {
+            switch (choice) {
                 case 1 -> borrowBook();
                 case 2 -> returnBook();
                 case 3 -> extendLoan();
@@ -48,7 +48,7 @@ public class LoanController {
 public void showAdminMenu() {
 
     boolean active = true;
-    int choise;
+    int choice;
 
     while (active) {
         System.out.println("---------------------------");
@@ -60,10 +60,10 @@ public void showAdminMenu() {
         System.out.println("4. See list of 5 most borrowed books");
         System.out.println("0. Back");
         System.out.print("Choose an option (1-4): ");
-        choise = scanner.nextInt();
+        choice = scanner.nextInt();
 
 
-        switch (choise) {
+        switch (choice) {
             case 1 -> showAllLoans();
             case 2 -> showOverdueLoans();
             case 3 -> returnBook();

@@ -21,7 +21,7 @@ public class MemberController {
     public void showMemberMenu() {
 
         boolean active = true;
-        int choise;
+        int choice;
 
         while (active) {
 
@@ -34,9 +34,9 @@ public class MemberController {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-5): ");
-            choise = scanner.nextInt();
+            choice = scanner.nextInt();
 
-            switch (choise) {
+            switch (choice) {
                 case 1 -> showProfile();
                 case 2 -> System.out.println("BECOME MEMBER");
                 case 3 -> showAdminMenu();
@@ -49,7 +49,7 @@ public class MemberController {
     public void showProfile() {
 
         boolean active = true;
-        int choise;
+        int choice;
 
         System.out.println("-------------------");
         System.out.println("SEE PROFILE");
@@ -82,17 +82,17 @@ try {
         System.out.println("MEMBER OPTIONS");
         System.out.println("-------------------");
         System.out.println("1. See my loans");
-        System.out.println("2. Edit profile");
-        System.out.println("3. See my fines");
+        System.out.println("2. See my fines");
+        System.out.println("3. Edit profile");
         System.out.println("0. Back");
         System.out.println("---------------------------");
         System.out.print("Choose an option (1-3): ");
-        choise = scanner.nextInt();
+        choice = scanner.nextInt();
 
-        switch (choise) {
+        switch (choice) {
             case 1 -> showMemberLoans(memberEmail);
-            case 2 -> editProfileMenu(memberEmail);
-            case 3 -> seeFines(memberEmail);
+            case 2 -> seeFines(memberEmail);
+            case 3 -> editProfileMenu(memberEmail);
             case 0 -> active = false;
             default -> System.out.println("INVALID OPTION");
         }
@@ -113,11 +113,23 @@ try {
 
 
     }
+    public void seeFines(String memberEmail) {
+        System.out.println("-------------------");
+        System.out.println("YOUR FINES");
+        System.out.println("-------------------");
+
+        List<Fine> fines = memberServices.showMemberFine(memberEmail);
+        for (Fine fine : fines) {
+            System.out.println(fine);
+        }
+
+
+    }
 
     public void editProfileMenu(String memberEmail) {
 
     boolean active = true;
-    int choise;
+    int choice;
 
     while (active) {
 
@@ -130,12 +142,12 @@ try {
         System.out.println("0. Back");
         System.out.println("---------------------------");
         System.out.print("Choose an option (1-3): ");
-        choise = scanner.nextInt();
+        choice = scanner.nextInt();
 
-        switch (choise) {
+        switch (choice) {
             case 1 -> editEmail(memberEmail);
             case 2 -> editName(memberEmail);
-            case 3 -> editMemberType(memberEmail);
+            case 3 -> editMemberStatus(memberEmail);
             case 0 -> active = false;
             default -> System.out.println("INVALID OPTION");
         }
@@ -143,37 +155,35 @@ try {
 
 
     }
+        public void editEmail(String memberEmail) {
+            System.out.println("-------------------");
+            System.out.println("CHANGE EMAIL");
+            System.out.println("-------------------");
+            scanner.nextLine();
+            System.out.print("Enter new email: ");
+            String newEmail = scanner.nextLine();
 
-    public void editEmail(String memberEmail) {
-        System.out.println("-------------------");
-        System.out.println("CHANGE EMAIL");
-        System.out.println("-------------------");
-        scanner.nextLine();
-        System.out.print("Enter new email: ");
-        String newEmail = scanner.nextLine();
-
-        memberServices.editProfileEmail(memberEmail, newEmail);
-
-
-
-    }
-
-    public void editName(String memberEmail) {
-        System.out.println("-------------------");
-        System.out.println("CHANGE NAME");
-        System.out.println("-------------------");
-        scanner.nextLine();
-        System.out.print("Enter first name: ");
-        String newFirstName = scanner.nextLine();
-        System.out.print("Enter last name: ");
-        String newLastName = scanner.nextLine();
-
-        memberServices.editProfileName(newFirstName, newLastName, memberEmail);
+            memberServices.editProfileEmail(memberEmail, newEmail);
 
 
 
-    }
-    public void editMemberType(String memberEmail) {
+        }
+        public void editName(String memberEmail) {
+            System.out.println("-------------------");
+            System.out.println("CHANGE NAME");
+            System.out.println("-------------------");
+            scanner.nextLine();
+            System.out.print("Enter first name: ");
+            String newFirstName = scanner.nextLine();
+            System.out.print("Enter last name: ");
+            String newLastName = scanner.nextLine();
+
+            memberServices.editProfileName(newFirstName, newLastName, memberEmail);
+
+
+
+        }
+        public void editMemberStatus(String memberEmail) {
 
         String memberStatus = "";
 
@@ -184,37 +194,29 @@ try {
         System.out.println("1. [ACTIVATE ACCOUNT]");
         System.out.println("2. [DEACTIVATE ACCOUNT]");
         System.out.print("Choose membership type (1-2): ");
-        int choise = scanner.nextInt();
+        int choice = scanner.nextInt();
 
-        switch (choise) {
+        switch (choice) {
             case 1 -> memberStatus = "active";
             case 2 -> memberStatus = "expired";
-            default -> System.out.println("INVALID OPTION");
+            default -> {
+                System.out.println("INVALID OPTION");
+                return; //return inget för att avbryta och inte råka skicka tom sträng till DB.
+            }
         }
 
-        memberServices.editMemberSt(memberEmail, memberStatus);
+        memberServices.editMemberStatus(memberEmail, memberStatus);
 
 
 
     }
 
-    public void seeFines(String memberEmail) {
-        System.out.println("-------------------");
-        System.out.println("YOUR FINES");
-        System.out.println("-------------------");
 
-List<Fine> fines = memberServices.showMemberFine(memberEmail);
-for (Fine fine : fines) {
-    System.out.println(fine);
-}
-
-
-    }
 
     /*---- ADMIN TOOLS ------*/
     public void showAdminMenu() {
         boolean active = true;
-        int choise;
+        int choice;
 
         while (active) {
 
@@ -226,9 +228,9 @@ for (Fine fine : fines) {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-5): ");
-            choise = scanner.nextInt();
+            choice = scanner.nextInt();
 
-            switch (choise) {
+            switch (choice) {
                 case 1 -> addMember();
                 case 2 -> suspendMember();
                 case 0 -> active = false;

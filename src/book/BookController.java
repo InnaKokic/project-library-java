@@ -18,7 +18,7 @@ public class BookController {
     public void showBookMenu() {
 
         boolean active = true;
-        int choise;
+        int choice;
 
 
         while (active) {
@@ -32,9 +32,9 @@ public class BookController {
             System.out.println("4. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-4): ");
-            choise = scanner.nextInt();
+            choice = scanner.nextInt();
 
-            switch (choise) {
+            switch (choice) {
                 case 1 -> showAllBooks();
                 case 2 -> searchBooks();
                 case 3 -> adminTools();
@@ -62,7 +62,7 @@ public void showAllBooks(){
 /* ----- OPTION 2 - Search books ----- */
 public void searchBooks() {
         boolean active = true;
-        int choise;
+        int choice;
 
 while (active) {
         System.out.println("SEARCH FOR BOOKS");
@@ -73,10 +73,10 @@ while (active) {
         System.out.println("---------------------------");
         scanner.nextLine();
         System.out.print("Choose an option (1-2): ");
-        choise = scanner.nextInt();
+        choice = scanner.nextInt();
 
 
-switch (choise) {
+switch (choice) {
     case 1 -> searchByTitle();
     case 2 -> searchByYear();
     case 0 -> active = false;
@@ -121,7 +121,7 @@ switch (choise) {
 /* ----- OPTION 3 - Admin tools ----- */
 public void adminTools() {
     boolean active = true;
-    int choise;
+    int choice;
 
     while (active) {
 
@@ -137,10 +137,10 @@ public void adminTools() {
         System.out.println("---------------------------");
         scanner.nextLine();
         System.out.print("Choose an option (1-7): ");
-        choise = scanner.nextInt();
+        choice = scanner.nextInt();
 
 
-        switch (choise) {
+        switch (choice) {
             case 1 -> addBook();
             case 2 -> updateBook();
             case 3 -> deleteBook();

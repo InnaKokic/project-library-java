@@ -34,7 +34,11 @@ public class MemberServices {
 
     public void editProfileEmail(String memberEmail, String newEmail ) {
 
-       memberRepository.editProfileEmail(newEmail, memberEmail);
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            System.out.println("Email cannot be empty");
+        }
+
+       memberRepository.editProfileEmail(newEmail.trim(), memberEmail);
     }
 
     public void editProfileName(String newFirstName, String newLastName, String memberEmail ) {
@@ -42,7 +46,7 @@ public class MemberServices {
        memberRepository.editProfileName(newFirstName,newLastName, memberEmail);
     }
 
-    public void editMemberSt(String memberEmail, String memberStatus) {
+    public void editMemberStatus(String memberEmail, String memberStatus) {
 
         memberRepository.editMemberStatus(memberEmail, memberStatus);
     }
@@ -59,9 +63,6 @@ public class MemberServices {
     }
 
     public void suspendMember(String memberEmail) {
-
-        //Validering
-        // Varning om medlem redan är suspended
 
         memberRepository.suspendMember(memberEmail);
     }
