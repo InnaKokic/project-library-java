@@ -42,7 +42,7 @@ public class BookController {
             System.out.println("1. View all books");
             System.out.println("2. Search for books ");
             System.out.println("3. Admin tools");
-            System.out.println("4. Back");
+            System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-4): ");
             choice = readInt();
@@ -51,7 +51,7 @@ public class BookController {
                 case 1 -> showAllBooks();
                 case 2 -> searchBooks();
                 case 3 -> adminTools();
-                case 4 -> active = false;
+                case 0 -> active = false;
                 default -> System.out.println("INVALID OPTION");
             }
         }
@@ -282,10 +282,11 @@ public class BookController {
         String lastName = scanner.nextLine();
         System.out.print("Nationality: ");
         String nationality = scanner.nextLine();
+        System.out.print("Birth date (YYYY-MM-DD): ");
 
                 try { //try catch för att förhindra fel input till birthDate
                     LocalDate birthDate = LocalDate.parse(scanner.nextLine());
-                    bookServices.addAuthor(firstName, lastName, nationality, birthDate);
+                    bookServices.updateAuthor(id, firstName, lastName, nationality, birthDate);
                 } catch (DateTimeParseException e) {
                     System.out.println("Invalid date format. Use YYYY-MM-DD.");
                 }

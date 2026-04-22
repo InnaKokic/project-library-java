@@ -208,7 +208,13 @@ return loans;
             stmt.setDate(3, Date.valueOf(LocalDate.now()));
             stmt.setDate(4, Date.valueOf(LocalDate.now().plusWeeks(2)));
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("Book not found");
+            } else {
+                System.out.println("Book successfully borrowed.");
+            }
         }
 
         catch (SQLException e) {

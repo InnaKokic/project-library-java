@@ -70,8 +70,6 @@ public class LoanController {
             System.out.print("Enter book ID: ");
             int bookId = readInt();
 
-
-
             try {
                 loanServices.createLoan(memberId, bookId);
             } catch (LibraryException e) {

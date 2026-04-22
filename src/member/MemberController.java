@@ -155,7 +155,8 @@ try {
         choice = readInt();
 
         switch (choice) {
-            case 1 -> editEmail(memberEmail);
+            case 1 -> memberEmail = editEmail(memberEmail); //Tar värdet av den nya email om för
+            // att kunna göra nya ändringar framåt
             case 2 -> editName(memberEmail);
             case 3 -> editMemberStatus(memberEmail);
             case 0 -> active = false;
@@ -165,7 +166,7 @@ try {
 
 
     }
-            public void editEmail(String memberEmail) {
+            public String editEmail(String memberEmail) {
                 System.out.println("-------------------");
                 System.out.println("CHANGE EMAIL");
                 System.out.println("-------------------");
@@ -174,8 +175,7 @@ try {
                 String newEmail = scanner.nextLine();
 
                 memberServices.editProfileEmail(memberEmail, newEmail);
-
-
+                return newEmail; //Skickar det nya emailen för att kunna göra andra ändringar framåt
 
             }
             public void editName(String memberEmail) {

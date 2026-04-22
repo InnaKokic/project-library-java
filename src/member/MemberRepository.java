@@ -107,7 +107,13 @@ return members;
             stmt.setString(2, memberEmail);
 
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("Could not add email");
+            } else {
+                System.out.println("Email changed successfully.");
+            }
 
 
         } catch (SQLException e) {
@@ -131,8 +137,13 @@ return members;
             stmt.setString(3, memberEmail);
 
 
-            stmt.executeUpdate();
-
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("Name not changed");
+            } else {
+                System.out.println("Name changed successfully.");
+            }
 
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -155,7 +166,13 @@ return members;
 
 
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("Could not change status");
+            } else {
+                System.out.println("Status changed successfully.");
+            }
 
 
         } catch (SQLException e) {
@@ -190,8 +207,13 @@ return members;
             stmt.setString(6, "active");
 
 
-            stmt.executeUpdate();
-
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("New member not created");
+            } else {
+                System.out.println("New member created successfully.");
+            }
 
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
@@ -211,7 +233,13 @@ return members;
             stmt.setString(1, memberEmail);
 
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("Member not suspended");
+            } else {
+                System.out.println("Member suspended successfully.");
+            }
 
 
         } catch (SQLException e) {

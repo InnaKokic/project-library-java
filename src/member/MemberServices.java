@@ -14,18 +14,18 @@ public class MemberServices {
 
     public List<Member> showMemberProfile(String memberEmail) {
 
-        if (memberEmail.isEmpty()) {
+        if (memberEmail.isEmpty()) { //Kollar så det inte söks med tom sträng för email i input
             throw new MemberNotFoundException(memberEmail);
         }
 
         List<Member> members = memberRepository.showMemberProfile(memberEmail);
 
-        if (members.isEmpty()) {          // <-- kolla listan, inte emailsträngen
+        if (members.isEmpty()) { // kollar om eposten finns i listan av member som hämtats från DB
             throw new MemberNotFoundException(memberEmail);
         }
 
-        Member member = members.get(0);
-        if (member.getStatus().equalsIgnoreCase("suspended")) {
+        Member member = members.getFirst(); //Hämtar det första (och enda) elementet i List
+        if (member.getStatus().equalsIgnoreCase("suspended")) { //Kollar om suspended
             throw new MemberSuspendedException(member.getId());
         }
 
