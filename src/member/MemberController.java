@@ -6,6 +6,7 @@ import loan.Loan;
 import loan.LoanServices;
 
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +17,20 @@ public class MemberController {
     LoanServices loanServices = new LoanServices();
 
     private final Scanner scanner = new Scanner(System.in);
+
+    //En metod för att förhindra annan input än int i scanner som kräver int
+    //använder inbyggd java klass InputMismatchException
+    private int readInt() {
+        while (true) {
+            try {
+                int input = scanner.nextInt();
+                return input;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+            }
+        }
+    }
 
 
     public void showMemberMenu() {
@@ -34,11 +49,11 @@ public class MemberController {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-5): ");
-            choice = scanner.nextInt();
+            choice = readInt();
 
             switch (choice) {
                 case 1 -> showProfile();
-                case 2 -> System.out.println("BECOME MEMBER");
+                case 2 -> addMember();
                 case 3 -> showAdminMenu();
                 case 0 -> active = false;
                 default -> System.out.println("INVALID OPTION");
@@ -46,6 +61,7 @@ public class MemberController {
         }
     }
 
+    /*----- PROFILE MENU -------*/
     public void showProfile() {
 
         boolean active = true;
@@ -70,12 +86,8 @@ try {
 
 } catch (LibraryException e) {
     System.out.println(e.getMessage());
-
     return;
-
 };
-
-
         while (active) {
 
         System.out.println("-------------------");
@@ -87,7 +99,7 @@ try {
         System.out.println("0. Back");
         System.out.println("---------------------------");
         System.out.print("Choose an option (1-3): ");
-        choice = scanner.nextInt();
+        choice = readInt();
 
         switch (choice) {
             case 1 -> showMemberLoans(memberEmail);
@@ -101,8 +113,7 @@ try {
 
 
     }
-
-    public void showMemberLoans(String memberEmail) {
+        public void showMemberLoans(String memberEmail) {
 
         System.out.println("---------------------");
         System.out.println("YOUR ACTIVE LOANS");
@@ -113,7 +124,7 @@ try {
 
 
     }
-    public void seeFines(String memberEmail) {
+        public void seeFines(String memberEmail) {
         System.out.println("-------------------");
         System.out.println("YOUR FINES");
         System.out.println("-------------------");
@@ -125,8 +136,7 @@ try {
 
 
     }
-
-    public void editProfileMenu(String memberEmail) {
+        public void editProfileMenu(String memberEmail) {
 
     boolean active = true;
     int choice;
@@ -142,7 +152,7 @@ try {
         System.out.println("0. Back");
         System.out.println("---------------------------");
         System.out.print("Choose an option (1-3): ");
-        choice = scanner.nextInt();
+        choice = readInt();
 
         switch (choice) {
             case 1 -> editEmail(memberEmail);
@@ -155,35 +165,35 @@ try {
 
 
     }
-        public void editEmail(String memberEmail) {
-            System.out.println("-------------------");
-            System.out.println("CHANGE EMAIL");
-            System.out.println("-------------------");
-            scanner.nextLine();
-            System.out.print("Enter new email: ");
-            String newEmail = scanner.nextLine();
+            public void editEmail(String memberEmail) {
+                System.out.println("-------------------");
+                System.out.println("CHANGE EMAIL");
+                System.out.println("-------------------");
+                scanner.nextLine();
+                System.out.print("Enter new email: ");
+                String newEmail = scanner.nextLine();
 
-            memberServices.editProfileEmail(memberEmail, newEmail);
-
-
-
-        }
-        public void editName(String memberEmail) {
-            System.out.println("-------------------");
-            System.out.println("CHANGE NAME");
-            System.out.println("-------------------");
-            scanner.nextLine();
-            System.out.print("Enter first name: ");
-            String newFirstName = scanner.nextLine();
-            System.out.print("Enter last name: ");
-            String newLastName = scanner.nextLine();
-
-            memberServices.editProfileName(newFirstName, newLastName, memberEmail);
+                memberServices.editProfileEmail(memberEmail, newEmail);
 
 
 
-        }
-        public void editMemberStatus(String memberEmail) {
+            }
+            public void editName(String memberEmail) {
+                System.out.println("-------------------");
+                System.out.println("CHANGE NAME");
+                System.out.println("-------------------");
+                scanner.nextLine();
+                System.out.print("Enter first name: ");
+                String newFirstName = scanner.nextLine();
+                System.out.print("Enter last name: ");
+                String newLastName = scanner.nextLine();
+
+                memberServices.editProfileName(newFirstName, newLastName, memberEmail);
+
+
+
+            }
+            public void editMemberStatus(String memberEmail) {
 
         String memberStatus = "";
 
@@ -194,7 +204,7 @@ try {
         System.out.println("1. [ACTIVATE ACCOUNT]");
         System.out.println("2. [DEACTIVATE ACCOUNT]");
         System.out.print("Choose membership type (1-2): ");
-        int choice = scanner.nextInt();
+        int choice = readInt();
 
         switch (choice) {
             case 1 -> memberStatus = "active";
@@ -211,8 +221,6 @@ try {
 
     }
 
-
-
     /*---- ADMIN TOOLS ------*/
     public void showAdminMenu() {
         boolean active = true;
@@ -228,7 +236,7 @@ try {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-5): ");
-            choice = scanner.nextInt();
+            choice = readInt();
 
             switch (choice) {
                 case 1 -> addMember();
@@ -239,10 +247,9 @@ try {
         }
 
     }
-
         public void addMember() {
         System.out.println("--------------------------");
-        System.out.println("ADD NEW MEMBER");
+        System.out.println("NEW MEMBER");
         System.out.println("--------------------------");
         scanner.nextLine();
         System.out.print("Enter first name: ");
@@ -261,7 +268,6 @@ try {
 
 
     }
-
         public void suspendMember() {
 
         int choice;
@@ -293,7 +299,7 @@ try {
         System.out.println("1. Suspend member");
         System.out.println("2. Cancel");
         System.out.print("Choose an option (1-2): ");
-        choice = scanner.nextInt();
+        choice = readInt();
 
         switch (choice) {
 
@@ -303,8 +309,6 @@ try {
 
 
     }
-
-
 
 
 }

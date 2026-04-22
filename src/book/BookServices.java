@@ -117,6 +117,12 @@ public class BookServices {
     }
 
     public void categoriesBook(int id, int categoryId) {
+
+        if (categoryId < 1 || categoryId > 12) {
+            System.out.println("Invalid category. Choose between 1 and 12.");
+            return;
+        }
+
         bookRepository.categoriesBook(id, categoryId);
     }
 }

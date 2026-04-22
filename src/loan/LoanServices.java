@@ -51,6 +51,11 @@ public class LoanServices {
             throw new MemberSuspendedException(member.getId());
         }
 
+        if (loanRepository.hasActiveLoan(memberID, bookId)) {
+            System.out.println("This member already has an active loan for this book.");
+            return;
+        }
+
 
         if (book == null) {
             System.out.println("Book not found.");
@@ -76,6 +81,9 @@ loanRepository.createLoan(memberID, bookId);
         if (member.getStatus().equalsIgnoreCase("suspended")) {
             throw new MemberSuspendedException(member.getId());
         }
+        if (!loanRepository.hasActiveLoan(memberID, bookId)) {
+            throw new NoActiveLoanException(memberID, bookId);
+        }
 
 loanRepository.extendLoan(memberID, bookId);
 
@@ -83,7 +91,9 @@ loanRepository.extendLoan(memberID, bookId);
 
     public void returnBook(int memberId, int bookId){
 
-        //Returnera att bok inte ät utlånad
+        if (!loanRepository.hasActiveLoan(memberId, bookId)) {
+            throw new NoActiveLoanException(memberId, bookId);
+        }
 
         loanRepository.returnBook(memberId, bookId);
     }

@@ -170,6 +170,27 @@ return loans;
         return popularBooks;
     }
 
+    public boolean hasActiveLoan(int memberId, int bookId) {
+        String sql = """
+            SELECT id FROM loans
+            WHERE member_id = ? AND book_id = ? AND return_date IS NULL
+            """;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, memberId);
+            stmt.setInt(2, bookId);
+
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // returnerar true om en rad hittades
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
+
     public void createLoan(int memberId, int bookId) {
 
 
@@ -191,7 +212,7 @@ return loans;
         }
 
         catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Could not create loan " + e.getMessage());
         }
 
     }
@@ -199,7 +220,7 @@ return loans;
 
         String sql = """
                 UPDATE loans SET due_date = ?
-                WHERE member_id = ? AND book_id = ?
+                WHERE member_id = ? AND book_id = ? AND return_date IS NULL
                 """;
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -208,7 +229,13 @@ return loans;
             stmt.setInt(2, memberId);
             stmt.setInt(3, bookId);
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("No active loan found for this member and book.");
+            } else {
+                System.out.println("Loan extended successfully.");
+            }
         }
 
         catch (SQLException e) {
@@ -217,27 +244,29 @@ return loans;
 
 
     }
-    public void returnBook(int memberId, int bookId){
-
+    public void returnBook(int memberId, int bookId) {
         String sql = """
-                UPDATE loans SET return_date = ?
-                WHERE member_id = ? AND book_id = ?
-                """;
-        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            UPDATE loans SET return_date = ?
+            WHERE member_id = ? AND book_id = ? AND return_date IS NULL
+            """;
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDate(1, Date.valueOf(LocalDate.now()));
             stmt.setInt(2, memberId);
             stmt.setInt(3, bookId);
 
-            stmt.executeUpdate();
+            //IF för att se om någon ändring görs i DB och få feedback om det.
+            int rows = stmt.executeUpdate();
+            if (rows == 0) {
+                System.out.println("No active loan found for this member and book.");
+            } else {
+                System.out.println("Book returned successfully.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Could not return book: " + e.getMessage());
         }
-
-        catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-
     }
 
 

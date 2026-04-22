@@ -36,6 +36,7 @@ public class MemberServices {
 
         if (newEmail == null || newEmail.trim().isEmpty()) {
             System.out.println("Email cannot be empty");
+            return;
         }
 
        memberRepository.editProfileEmail(newEmail.trim(), memberEmail);

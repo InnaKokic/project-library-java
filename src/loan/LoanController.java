@@ -2,6 +2,7 @@ package loan;
 
 import exception.LibraryException;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +11,20 @@ public class LoanController {
     LoanServices loanServices = new LoanServices();
 
     private final Scanner scanner = new Scanner (System.in);
+
+    //En metod för att förhindra annan input än int i scanner som kräver int
+    //använder inbyggd java klass InputMismatchException
+    private int readInt() {
+        while (true) {
+            try {
+                int input = scanner.nextInt();
+                return input;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+            }
+        }
+    }
 
 
     public void showLoanMenu() {
@@ -29,7 +44,7 @@ public class LoanController {
             System.out.println("0. Back");
             System.out.println("---------------------------");
             System.out.print("Choose an option (1-4): ");
-            choice = scanner.nextInt();
+            choice = readInt();
 
             switch (choice) {
                 case 1 -> borrowBook();
@@ -44,63 +59,122 @@ public class LoanController {
 
 
     }
+        public void borrowBook() {
 
-public void showAdminMenu() {
+            System.out.println("---------------------");
+            System.out.println("BORROW BOOK");
+            System.out.println("---------------------");
 
-    boolean active = true;
-    int choice;
-
-    while (active) {
-        System.out.println("---------------------------");
-        System.out.println("ADMIN TOOLS");
-        System.out.println("--------------------------");
-        System.out.println("1. Show all active loans");
-        System.out.println("2. Show overdue loans");
-        System.out.println("3. Return a book manually");
-        System.out.println("4. See list of 5 most borrowed books");
-        System.out.println("0. Back");
-        System.out.print("Choose an option (1-4): ");
-        choice = scanner.nextInt();
+            System.out.print("Enter your member ID: ");
+            int memberId = readInt();
+            System.out.print("Enter book ID: ");
+            int bookId = readInt();
 
 
-        switch (choice) {
-            case 1 -> showAllLoans();
-            case 2 -> showOverdueLoans();
-            case 3 -> returnBook();
-            case 4 -> showPopularBooks();
-            case 0 -> active = false;
-          default -> System.out.println("INVALID OPTION");
+
+            try {
+                loanServices.createLoan(memberId, bookId);
+            } catch (LibraryException e) {
+                System.out.println(e.getMessage());
+            }
+
+
+        }
+        public void returnBook() {
+
+            System.out.println("---------------------");
+            System.out.println("RETURN BOOK");
+            System.out.println("---------------------");
+
+            System.out.print("Enter borrowers member ID: ");
+            int memberId = readInt();
+            System.out.print("Enter book ID: ");
+            int bookId = readInt();
+
+            try{
+                loanServices.returnBook(memberId, bookId);
+            } catch (LibraryException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+        public void extendLoan() {
+
+            System.out.println("---------------------");
+            System.out.println("EXTEND LOAN");
+            System.out.println("---------------------");
+
+            System.out.print("Enter your member ID: ");
+            int memberId = readInt();
+            System.out.print("Enter book ID: ");
+            int bookId = readInt();
+
+            try{
+                loanServices.extendLoan(memberId, bookId);
+            } catch (LibraryException e) {
+                System.out.println(e.getMessage());
+            }
+
+
+
+
+
+        }
+        public void showAdminMenu() {
+
+        boolean active = true;
+        int choice;
+
+        while (active) {
+            System.out.println("---------------------------");
+            System.out.println("ADMIN TOOLS");
+            System.out.println("--------------------------");
+            System.out.println("1. Show all active loans");
+            System.out.println("2. Show overdue loans");
+            System.out.println("3. Return a book manually");
+            System.out.println("4. See list of 5 most borrowed books");
+            System.out.println("0. Back");
+            System.out.print("Choose an option (1-4): ");
+            choice = readInt();
+
+
+            switch (choice) {
+                case 1 -> showAllLoans();
+                case 2 -> showOverdueLoans();
+                case 3 -> returnBook();
+                case 4 -> showPopularBooks();
+                case 0 -> active = false;
+              default -> System.out.println("INVALID OPTION");
+            }
         }
     }
-}
-    public void showAllLoans() {
+            public void showAllLoans() {
 
-        System.out.println("---------------------");
-        System.out.println("ALL ACTIVE LOANS");
-        System.out.println("---------------------");
+            System.out.println("---------------------");
+            System.out.println("ALL ACTIVE LOANS");
+            System.out.println("---------------------");
 
-        List<Loan> loans = loanServices.showAllLoans();
-        for (Loan loan : loans)
-            System.out.println(loan);
-
-
-
-    }
-    public void showOverdueLoans() {
-
-        System.out.println("---------------------");
-        System.out.println("ALL OVERDUE LOANS");
-        System.out.println("---------------------");
-
-        List<Loan> loans = loanServices.showOverdueLoans();
-        for (Loan loan : loans)
-            System.out.println(loan);
+            List<Loan> loans = loanServices.showAllLoans();
+            for (Loan loan : loans)
+                System.out.println(loan);
 
 
 
-    }
+        }
+            public void showOverdueLoans() {
 
-    public void showPopularBooks() {
+            System.out.println("---------------------");
+            System.out.println("ALL OVERDUE LOANS");
+            System.out.println("---------------------");
+
+            List<Loan> loans = loanServices.showOverdueLoans();
+            for (Loan loan : loans)
+                System.out.println(loan);
+
+
+
+        }
+            public void showPopularBooks() {
         System.out.println("---------------------");
         System.out.println("5 MOST BORROWED BOOKS");
         System.out.println("---------------------");
@@ -113,65 +187,6 @@ public void showAdminMenu() {
     }
 
 
-    public void borrowBook() {
-
-        System.out.println("---------------------");
-        System.out.println("BORROW BOOK");
-        System.out.println("---------------------");
-
-        System.out.print("Enter your member ID: ");
-        int memberId = scanner.nextInt();
-        System.out.print("Enter book ID: ");
-        int bookId = scanner.nextInt();
-
-
-
-        try {
-            loanServices.createLoan(memberId, bookId);
-        } catch (LibraryException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-    }
-    public void extendLoan() {
-
-        System.out.println("---------------------");
-        System.out.println("EXTEND LOAN");
-        System.out.println("---------------------");
-
-        System.out.print("Enter your member ID: ");
-        int memberId = scanner.nextInt();
-        System.out.print("Enter book ID: ");
-        int bookId = scanner.nextInt();
-
-        try{
-            loanServices.extendLoan(memberId, bookId);
-        } catch (LibraryException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-
-
-
-    }
-    public void returnBook() {
-
-        System.out.println("---------------------");
-        System.out.println("RETURN BOOK");
-        System.out.println("---------------------");
-
-        System.out.print("Enter borrowers member ID: ");
-        int memberId = scanner.nextInt();
-        System.out.print("Enter book ID: ");
-        int bookId = scanner.nextInt();
-
-        loanServices.returnBook(memberId, bookId);
-
-
-
-    }
 
 
 

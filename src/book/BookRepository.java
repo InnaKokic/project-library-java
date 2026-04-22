@@ -223,7 +223,7 @@ INSERT INTO books (title, isbn, year_published) VALUES (?, ?, ?)
 
 
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        System.out.println("Could not add book " + e.getMessage());
     }
 
 }
@@ -239,11 +239,15 @@ public void deleteBook(int id) {
 
         stmt.setInt(1, id);
 
-       stmt.executeUpdate();
+        //IF för att se om någon ändring görs i DB och få feedback om det.
+        int rows = stmt.executeUpdate();
+        if (rows == 0) {
+            System.out.println("Book not found");
+        }
 
 
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        System.out.println("Could not delete book " + e.getMessage());
     }
 
 }
@@ -264,11 +268,15 @@ public void updateBook(int id, String newTitle, String newIsbn, int newYear) {
         stmt.setInt(3, newYear);
         stmt.setInt(4, id);
 
-        stmt.executeUpdate();
+        //IF för att se om någon ändring görs i DB och få feedback om det.
+        int rows = stmt.executeUpdate();
+        if (rows == 0) {
+            System.out.println("Book not found");
+        }
 
 
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        System.out.println("Could not update book " + e.getMessage());
     }
 }
 
@@ -293,8 +301,7 @@ public void categoriesBook(int id, int categoryId) {
     }
 }
 
-public void updateAuthor(int id, String firstName, String lastName, String nationality,
-                         LocalDate birthDate) {
+public void updateAuthor(int id, String firstName, String lastName, String nationality, LocalDate birthDate) {
 
     String sql = """
             UPDATE authors SET first_name = ?, last_name = ?, nationality = ?, birth_date = ?
@@ -310,11 +317,15 @@ public void updateAuthor(int id, String firstName, String lastName, String natio
         stmt.setDate(4, Date.valueOf(birthDate));
         stmt.setInt(5, id);
 
-        stmt.executeUpdate();
+        //IF för att se om någon ändring görs i DB och få feedback om det.
+        int rows = stmt.executeUpdate();
+        if (rows == 0) {
+            System.out.println("Author not found");
+        }
 
 
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        System.out.println("Could not update author " + e.getMessage());
     }
 }
 

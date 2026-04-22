@@ -4,6 +4,7 @@ import book.BookRepository;
 import loan.LoanController;
 import member.MemberController;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -16,8 +17,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+
         boolean active = true;
-        int choise;
+        int choice;
 
 
 while (active){
@@ -30,10 +32,10 @@ while (active){
     System.out.println("0. Exit");
     System.out.println("**************************");
     System.out.print("Choose an option (1-3): ");
-    choise = scanner.nextInt();
+    choice = scanner.nextInt();
 
 
-    switch (choise) {
+    switch (choice) {
         case 1 -> bookController.showBookMenu();
         case 2 -> loanController.showLoanMenu();
         case 3 -> memberController.showMemberMenu();
