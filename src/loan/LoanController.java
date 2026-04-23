@@ -20,7 +20,7 @@ public class LoanController {
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+                scanner.nextLine();
             }
         }
     }
@@ -129,7 +129,7 @@ public class LoanController {
             System.out.println("1. Show all active loans");
             System.out.println("2. Show overdue loans");
             System.out.println("3. Return a book manually");
-            System.out.println("4. See list of 5 most borrowed books");
+            System.out.println("4. See list of most borrowed books");
             System.out.println("0. Back");
             System.out.print("Choose an option (1-4): ");
             choice = readInt();
@@ -173,7 +173,7 @@ public class LoanController {
         }
             public void showPopularBooks() {
         System.out.println("---------------------");
-        System.out.println("5 MOST BORROWED BOOKS");
+        System.out.println("MOST BORROWED BOOKS");
         System.out.println("---------------------");
 
         List<PopularBookDTO> popularBooks = loanServices.showPopularBooks();

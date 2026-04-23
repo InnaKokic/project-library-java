@@ -25,7 +25,7 @@ public class MemberController {
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+                scanner.nextLine();
             }
         }
     }

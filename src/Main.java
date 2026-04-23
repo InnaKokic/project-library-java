@@ -23,7 +23,6 @@ public class Main {
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // töm bufferten så loopen inte fastnar
             }
         }
     }

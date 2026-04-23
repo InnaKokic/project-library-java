@@ -22,7 +22,7 @@ public class BookController {
                 return input;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+                scanner.nextLine();
             }
         }
     }
@@ -99,10 +99,11 @@ public class BookController {
         }
             public void searchByTitle() {
 
-                scanner.nextLine();
+
                 System.out.println("SEARCH FOR BOOKS BY TITLE");
                 System.out.println("--------------------------");
                 System.out.print("Enter title: ");
+                scanner.nextLine();
                 String title = scanner.nextLine();
 
                 List<Book> books = bookServices.searchTitle(title);
@@ -114,11 +115,13 @@ public class BookController {
             }
             public void searchByYear() {
 
-            scanner.nextLine();
+
             System.out.println("SEARCH FOR BOOKS BY YEAR");
             System.out.println("--------------------------");
             System.out.print("Enter year: ");
+
             int year = readInt();
+
 
             List<Book> books = bookServices.searchYear(year);
 
