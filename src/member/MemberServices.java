@@ -2,8 +2,6 @@ package member;
 
 import fine.Fine;
 import fine.FineRepository;
-import member.Member;
-
 import java.util.List;
 
 public class MemberServices {

@@ -58,6 +58,7 @@ public class BookServices {
         return bookRepository.searchBookByTitle(cleanedTitle);
 
     }
+
     public List<Book> searchYear(int year) {
 
         //hämtar aktuellt år dynamiskt i stället för att hårdkoda ett värde.
@@ -111,6 +112,7 @@ public class BookServices {
                           LocalDate birthDate) {
         bookRepository.addAuthor(firstName,lastName,nationality,birthDate);
     }
+
     public void updateAuthor(int id, String firstName, String lastName, String nationality,
                           LocalDate birthDate) {
         bookRepository.updateAuthor(id, firstName,lastName,nationality,birthDate);

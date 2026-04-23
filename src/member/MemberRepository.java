@@ -49,6 +49,7 @@ public class MemberRepository {
 
         return null;
     }
+
     public List<Member> showMemberProfile(String memberEmail) {
 
         List<Member> members = new ArrayList<>();
@@ -94,6 +95,7 @@ public class MemberRepository {
 
 return members;
     }
+
     public void editProfileEmail(String newEmail, String memberEmail) {
 
         String sql = """
@@ -123,6 +125,7 @@ return members;
 
 
     }
+
     public void editProfileName(String newFirstName, String newLastName, String memberEmail) {
 
         String sql = """
@@ -152,6 +155,7 @@ return members;
 
 
     }
+
     public void editMemberStatus(String memberEmail, String memberStatus) {
 
         String sql = """
@@ -182,6 +186,7 @@ return members;
 
 
     }
+
     public void addMember(String firstName, String lastName, String email, String memberType ) {
 
         String sql = """
@@ -220,6 +225,7 @@ return members;
         }
 
     }
+
     public void suspendMember(String memberEmail) {
 
         String sql = """

@@ -1,6 +1,4 @@
-import book.Book;
 import book.BookController;
-import book.BookRepository;
 import loan.LoanController;
 import member.MemberController;
 
@@ -9,13 +7,30 @@ import java.util.Scanner;
 
 
 public class Main {
+
+    private static BookController bookController = new BookController();
+    private static LoanController loanController = new LoanController();
+    private static MemberController memberController = new MemberController();
+
+    private static Scanner scanner = new Scanner(System.in);
+
+    //En metod för att förhindra annan input än int i scanner som kräver int
+    //använder inbyggd java klass InputMismatchException
+    private static int readInt() {
+        while (true) {
+            try {
+                int input = scanner.nextInt();
+                return input;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // töm bufferten så loopen inte fastnar
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
-        BookController bookController = new BookController();
-        LoanController loanController = new LoanController();
-        MemberController memberController = new MemberController();
 
-        Scanner scanner = new Scanner(System.in);
 
 
         boolean active = true;
@@ -32,7 +47,7 @@ while (active){
     System.out.println("0. Exit");
     System.out.println("**************************");
     System.out.print("Choose an option (1-3): ");
-    choice = scanner.nextInt();
+    choice = readInt();
 
 
     switch (choice) {

@@ -1,6 +1,6 @@
 package loan;
 
-import book.Book;
+
 import book.BookAvailabilityDTO;
 import book.BookRepository;
 import member.Member;

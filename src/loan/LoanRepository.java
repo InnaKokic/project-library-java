@@ -222,6 +222,7 @@ return loans;
         }
 
     }
+
     public void extendLoan(int memberId, int bookId){
 
         String sql = """
@@ -250,6 +251,7 @@ return loans;
 
 
     }
+
     public void returnBook(int memberId, int bookId) {
         String sql = """
             UPDATE loans SET return_date = ?

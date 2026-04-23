@@ -4,8 +4,6 @@ import exception.LibraryException;
 import fine.Fine;
 import loan.Loan;
 import loan.LoanServices;
-
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
