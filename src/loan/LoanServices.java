@@ -18,7 +18,7 @@ public class LoanServices {
 
     public List<Loan> showMemberLoans(String memberEmail){
 
-        //Visa bara lån som ej är returnerade
+
 
         return loanRepository.getAllMemberLoans(memberEmail);
     }

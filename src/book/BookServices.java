@@ -39,9 +39,6 @@ public class BookServices {
         String cleanedTitle = title.trim();
 
 
-        // Om användaren bara skriver mellanslag blir cleanedTitle en tom sträng.
-        // Då stoppar vi här och returnerar en tom lista i stället för
-        // att skicka en dålig sökning vidare till repot.
         if (cleanedTitle.isEmpty()) {
             System.out.println("Title cannot be empty.");
             return List.of();
@@ -72,8 +69,6 @@ public class BookServices {
             return List.of();
         }
 
-        // ÄNDRING:
-        // Bara giltiga årtal skickas vidare till repot.
         return bookRepository.searchBookByYear(year);
 
     }

@@ -26,7 +26,7 @@ public class Fine {
             this.status = status;
         }
 
-        // Getters
+
         public int getId() { return id; }
         public int getLoanId() { return loanId; }
         public int getMemberId() {
@@ -38,7 +38,7 @@ public class Fine {
         public LocalDate getPaidDate() { return paidDate; }
         public String getStatus() { return status; }
 
-        // Setters
+
         public void setStatus(String status) {
             this.status = status;
         }
@@ -47,7 +47,7 @@ public class Fine {
             this.paidDate = paidDate;
         }
 
-        // toString
+
         @Override
         public String toString() {
             return  " | Member ID: " + memberId +

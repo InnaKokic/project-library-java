@@ -59,7 +59,7 @@ public class MemberController {
         }
     }
 
-    /*----- PROFILE MENU -------*/
+
     public void showProfile() {
 
         boolean active = true;
@@ -219,7 +219,7 @@ try {
 
     }
 
-    /*---- ADMIN TOOLS ------*/
+
     public void showAdminMenu() {
         boolean active = true;
         int choice;
